@@ -1,4 +1,5 @@
 import React from "react";
+import { mergeSort } from "../sortingAlgorithms/mergeSort.js";
 import "./SortingVisualizer.css";
 
 export default class SortingVisualizer extends React.Component {
@@ -16,27 +17,60 @@ export default class SortingVisualizer extends React.Component {
 
   resetArray() {
     const array = [];
-    for (let i = 0; i < 100; i++) {
-      array.push(randomIntFromInterval(5, 1000));
+    for (let i = 0; i < 430; i++) {
+      array.push(randomIntFromInterval(5, 730));
     }
 
     this.setState({ array });
   }
 
+  mergeSort() {}
+
+  testSortingAlgorithm() {
+    for (let i = 0; i < 100; i++) {
+      const array = [];
+      const length = randomIntFromInterval(1, 1000);
+      for (let i = 0; i < length; i++) {
+        array.push(randomIntFromInterval(-1000, 1000));
+      }
+      const javaScriptSortedArray = array.slice().sort((a, b) => a - b);
+      const sortedArray = mergeSort(array);
+      console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
+    }
+  }
+
   render() {
     const { array } = this.state;
     return (
-      <>
+      <div className="array-container">
         {array.map((value, idx) => (
-          <div className="array-bar" key={idx}>
-            {value}
-          </div>
+          <div
+            className="array-bar"
+            key={idx}
+            style={{ height: `${value}px` }}
+          ></div>
         ))}
-      </>
+        <button onClick={() => this.resetArray()}>Generate Array</button>
+        <button onClick={() => this.mergeSort()}>Merge Sort</button>
+        <button onClick={() => this.quickSort()}>Quick Sort</button>
+        <button onClick={() => this.heapSort()}>Heap Sort</button>
+        <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
+        <button onClick={() => this.testSortingAlgorithm()}>Test Algo</button>
+      </div>
     );
   }
 }
 
 function randomIntFromInterval(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function arraysAreEqual(arrayOne, arrayTwo) {
+  if (arrayOne.length !== arrayTwo.length) return false;
+  for (let i = 0; i < arrayOne.length; i++) {
+    if (arrayOne[i] !== arrayTwo[i]) {
+      return false;
+    }
+  }
+  return true;
 }
