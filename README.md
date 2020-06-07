@@ -67,3 +67,69 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+ <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <a className="navbar-brand" href="index.html">
+            Sorting Visualizer
+          </a>
+          <div className="navbar-nav">
+            <div className="btn-group" role="group">
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={() => this.resetArray()}
+              >
+                Generate New Array
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => this.testSortingAlgorithm()}
+              >
+                Test Algorithms
+              </button>
+            </div>
+            <div
+              className="btn-group"
+              role="group"
+              style={{ right: "10px", position: "absolute" }}
+            >
+              <button
+                type="button"
+                className="btn btn- primary"
+                onClick={() => {
+                  this.mergeSort();
+                }}
+              >
+                Merge Sort
+              </button>
+              <button
+                type="button"
+                className="btn btn- primary"
+                onClick={() => {
+                  this.quickSort();
+                }}
+              >
+                Quick Sort
+              </button>
+              <button
+                type="button"
+                className="btn btn- primary"
+                onClick={() => {
+                  this.heapSort();
+                }}
+              >
+                Heap Sort
+              </button>
+              <button
+                type="button"
+                className="btn btn- primary"
+                onClick={() => {
+                  this.bubbleSort();
+                }}
+              >
+                Bubble Sort
+              </button>
+            </div>
+          </div>
+        </nav>
