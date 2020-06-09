@@ -61,7 +61,7 @@ export default class SortingVisualizer extends React.Component {
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
-        }, i * ANIMATION_SPEED_MS);
+        }, i * 5);
       } else {
         setTimeout(() => {
           if (i % 4 === 3) {
@@ -79,10 +79,10 @@ export default class SortingVisualizer extends React.Component {
               barTwoStyle.backgroundColor = SORTED_COLOR;
             }
           }
-        }, i * ANIMATION_SPEED_MS);
+        }, i * 5);
       }
     }
-    const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length + 500);
+    const RESTORE_TIME = parseInt(5 * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
   }
   heapSort() {
@@ -195,7 +195,7 @@ export default class SortingVisualizer extends React.Component {
           else {
             barTwoStyle.backgroundColor = SUDO_SORTED_COLOR;
           }
-        }, i * ANIMATION_SPEED_MS);
+        }, i * 5);
       } else {
         const [temp, barOneIdx, newHeight] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
@@ -206,10 +206,10 @@ export default class SortingVisualizer extends React.Component {
           } else {
             barOneStyle.backgroundColor = PRIMARY_COLOR;
           }
-        }, i * ANIMATION_SPEED_MS);
+        }, i * 5);
       }
     }
-    const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length + 500);
+    const RESTORE_TIME = parseInt(5 * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
   }
   mergeSort() {
