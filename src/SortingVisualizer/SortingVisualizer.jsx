@@ -116,7 +116,7 @@ export default class SortingVisualizer extends React.Component {
 
   quickSort() {
     alert("Lime Green Denotes Sorted");
-    alert("Blinking Bar is the pivot");
+    alert("Yellow Bar is the pivot");
     const [animations, sortedArray] = getQuickSortAnimations(this.state.array);
     const arrayBars = document.getElementsByClassName("array-bar");
     this.disableButtons();
