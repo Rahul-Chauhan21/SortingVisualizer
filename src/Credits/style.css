@@ -1,0 +1,24 @@
+.credits {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  box-shadow: 0 0 8px 3px #0a0a0a5c;
+  padding: 5px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.credits > div {
+  transition: all 0.1s;
+}
+.credits > div img {
+  width: 20px;
+  height: 20px;
+}
+.credits > div:not(:first-child) {
+  margin-top: 5px;
+}
+.credits > div:hover {
+  transform: scale(1.1);
+}
