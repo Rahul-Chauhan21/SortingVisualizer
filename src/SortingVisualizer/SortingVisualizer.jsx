@@ -23,6 +23,7 @@ export default class SortingVisualizer extends React.Component {
 
     this.state = {
       array: [],
+      isSorted: false,
     };
   }
 
@@ -41,6 +42,7 @@ export default class SortingVisualizer extends React.Component {
     }
 
     this.setState({ array });
+    this.setState({ isSorted: false });
     const arrayBars = document.getElementsByClassName("array-bar");
     for (let i = 0; i < arrayBars.length; i++) {
       var ithBarStyle = arrayBars[i].style;
@@ -48,10 +50,13 @@ export default class SortingVisualizer extends React.Component {
     }
   }
   bubbleSort() {
+    if (this.state.isSorted) {
+      swal("Already Sorted, Create a new Array");
+      return;
+    }
     swal("Lime Green denotes Sorted Position");
     this.disableButtons();
     const [animations, sortedArray] = getBubbleSortAnimations(this.state.array);
-    console.log(animations);
     const arrayBars = document.getElementsByClassName("array-bar");
     for (let i = 0; i < animations.length; i++) {
       const isColorChange = i % 4 !== 3 && i % 4 !== 2;
@@ -87,16 +92,18 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(5 * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     setTimeout(
-      () =>
-        swal(
-          "Array Sorted!",
-          "Please Click Generate New Array for next Visualization",
-          "success"
-        ),
+      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
       RESTORE_TIME
     );
+    setTimeout(() => {
+      this.setState({ isSorted: !this.isSorted });
+    }, RESTORE_TIME);
   }
   heapSort() {
+    if (this.state.isSorted) {
+      swal("Already Sorted, Create a new Array");
+      return;
+    }
     swal("Lime Green denotes Sorted Position");
     this.disableButtons();
     const [animations, sortedArray] = getHeapSortAnimations(this.state.array);
@@ -124,17 +131,19 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     setTimeout(
-      () =>
-        swal(
-          "Array Sorted!",
-          "Please Click Generate New Array for next Visualization",
-          "success"
-        ),
+      () => swal("Array Sorted!", "Hope you liked it", "success"),
       RESTORE_TIME
     );
+    setTimeout(() => {
+      this.setState({ isSorted: !this.isSorted });
+    }, RESTORE_TIME);
   }
 
   quickSort() {
+    if (this.state.isSorted) {
+      swal("Already Sorted, Create a new Array");
+      return;
+    }
     swal("Lime Green Denotes Sorted Position and Yellow Bar is the pivot");
     const [animations, sortedArray] = getQuickSortAnimations(this.state.array);
     const arrayBars = document.getElementsByClassName("array-bar");
@@ -146,6 +155,7 @@ export default class SortingVisualizer extends React.Component {
       if (isColorChange) {
         const color =
           animations[i][0] === "comparison1" ? SECONDARY_COLOR : PRIMARY_COLOR;
+        //eslint-disable-next-line
         const [temp, barOneIdx, barTwoIdx, pivotIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
@@ -166,6 +176,7 @@ export default class SortingVisualizer extends React.Component {
           }
         }, i * ANIMATION_SPEED_MS);
       } else {
+        //eslint-disable-next-line
         const [temp, barOneIdx, newHeight, pivotIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         setTimeout(() => {
@@ -185,18 +196,20 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     setTimeout(
-      () =>
-        swal(
-          "Array Sorted!",
-          "Please Click Generate New Array for next Visualization",
-          "success"
-        ),
+      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
       RESTORE_TIME
     );
+    setTimeout(() => {
+      this.setState({ isSorted: !this.isSorted });
+    }, RESTORE_TIME);
   }
   insertionSort() {
+    if (this.state.isSorted) {
+      swal("Already Sorted, Create a new Array");
+      return;
+    }
     swal(
-      "Red denotes Sudo Sorted Position and Lime Green denotes Sorted Position"
+      "Blinking Red Bar denotes Sudo Sorted Position and Lime Green denotes Sorted Position"
     );
     this.disableButtons();
     const [animations, sortedArray] = getInsertionSortAnimations(
@@ -210,6 +223,7 @@ export default class SortingVisualizer extends React.Component {
       if (isColorChange === true) {
         const color =
           animations[i][0] === "comparison1" ? SECONDARY_COLOR : PRIMARY_COLOR;
+        //eslint-disable-next-line
         const [temp, barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
@@ -226,6 +240,7 @@ export default class SortingVisualizer extends React.Component {
           }
         }, i * 5);
       } else {
+        //eslint-disable-next-line
         const [temp, barOneIdx, newHeight] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         setTimeout(() => {
@@ -241,16 +256,18 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(5 * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     setTimeout(
-      () =>
-        swal(
-          "Array Sorted!",
-          "Please Click Generate New Array for next Visualization",
-          "success"
-        ),
+      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
       RESTORE_TIME
     );
+    setTimeout(() => {
+      this.setState({ isSorted: !this.isSorted });
+    }, RESTORE_TIME);
   }
   mergeSort() {
+    if (this.state.isSorted) {
+      swal("Already Sorted, Create a new Array");
+      return;
+    }
     swal("Lime Green denotes Sorted Position");
     this.disableButtons();
     const [animations, sortedArray] = getMergeSortAnimations(this.state.array);
@@ -284,14 +301,12 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS * animations.length + 500);
     setTimeout(() => this.restoreButtons(), RESTORE_TIME);
     setTimeout(
-      () =>
-        swal(
-          "Array Sorted!",
-          "Please Click Generate New Array for next Visualization",
-          "success"
-        ),
+      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
       RESTORE_TIME
     );
+    setTimeout(() => {
+      this.setState({ isSorted: !this.isSorted });
+    }, RESTORE_TIME);
   }
 
   disableButtons() {
@@ -323,8 +338,7 @@ export default class SortingVisualizer extends React.Component {
   }
 
   testSortingAlgorithm() {
-    alert("Currently Testing on Merge Sort");
-    alert("Open Console for Results");
+    swal("Currently Working on Merge Sort, Open Console");
     for (let i = 0; i < 100; i++) {
       const array = [];
       const length = randomIntFromInterval(1, 1000);
