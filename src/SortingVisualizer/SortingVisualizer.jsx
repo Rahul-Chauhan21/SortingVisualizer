@@ -9,7 +9,7 @@ import { getInsertionSortAnimations } from "../sortingAlgorithms/insertionSort";
 import "./SortingVisualizer.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 const ANIMATION_SPEED_MS = 10;
-
+const WIDTH = (0.75 * window.innerWidth) / 11;
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "pink";
 // This is the color of array bars that are being compared throughout the animations.
@@ -37,8 +37,8 @@ export default class SortingVisualizer extends React.Component {
   }
   resetArray() {
     const array = [];
-    for (let i = 0; i < 135; i++) {
-      array.push(randomIntFromInterval(5, 830));
+    for (let i = 0; i < WIDTH; i++) {
+      array.push(randomIntFromInterval(5, 0.85 * window.innerHeight));
     }
 
     this.setState({ array });
@@ -359,7 +359,7 @@ export default class SortingVisualizer extends React.Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-          <a className="navbar-brand " href="index.html">
+          <a className="navbar-brand " onClick={this.reload} href="index.html">
             Sorting Visualizer
           </a>
           <div className="navbar-nav">

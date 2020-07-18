@@ -1,5 +1,5 @@
 .array-container {
-  position: fixed;
+  position: absolute;
   left: 100px;
   top: 100px;
   right: 100px;
@@ -9,4 +9,8 @@
   background-color: pink;
   display: inline-block;
   margin: 0 1px;
+}
+
+.navbar-brand {
+  color: #ffffff !important;
 }
