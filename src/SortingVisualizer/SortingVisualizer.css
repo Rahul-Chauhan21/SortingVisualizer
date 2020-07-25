@@ -73,4 +73,5 @@ p {
 
 .slider:disabled {
   opacity: 1;
+  cursor: not-allowed;
 }
