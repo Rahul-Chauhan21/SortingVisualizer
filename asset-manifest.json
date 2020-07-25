@@ -1,26 +1,23 @@
 {
   "files": {
-    "main.css": "/SortingVisualizer/static/css/main.26a3de62.chunk.css",
-    "main.js": "/SortingVisualizer/static/js/main.0740f650.chunk.js",
-    "main.js.map": "/SortingVisualizer/static/js/main.0740f650.chunk.js.map",
+    "main.css": "/SortingVisualizer/static/css/main.22422a1f.chunk.css",
+    "main.js": "/SortingVisualizer/static/js/main.c0329935.chunk.js",
+    "main.js.map": "/SortingVisualizer/static/js/main.c0329935.chunk.js.map",
     "runtime-main.js": "/SortingVisualizer/static/js/runtime-main.7b7ac56c.js",
     "runtime-main.js.map": "/SortingVisualizer/static/js/runtime-main.7b7ac56c.js.map",
-    "static/css/2.af3c1da9.chunk.css": "/SortingVisualizer/static/css/2.af3c1da9.chunk.css",
-    "static/js/2.305c57df.chunk.js": "/SortingVisualizer/static/js/2.305c57df.chunk.js",
-    "static/js/2.305c57df.chunk.js.map": "/SortingVisualizer/static/js/2.305c57df.chunk.js.map",
+    "static/js/2.ffad133e.chunk.js": "/SortingVisualizer/static/js/2.ffad133e.chunk.js",
+    "static/js/2.ffad133e.chunk.js.map": "/SortingVisualizer/static/js/2.ffad133e.chunk.js.map",
     "index.html": "/SortingVisualizer/index.html",
-    "precache-manifest.0aacbbf7fa6e7674c90b8555d871f6a0.js": "/SortingVisualizer/precache-manifest.0aacbbf7fa6e7674c90b8555d871f6a0.js",
+    "precache-manifest.b61a8ba84c00f8571f5a25c6835928f0.js": "/SortingVisualizer/precache-manifest.b61a8ba84c00f8571f5a25c6835928f0.js",
     "service-worker.js": "/SortingVisualizer/service-worker.js",
-    "static/css/2.af3c1da9.chunk.css.map": "/SortingVisualizer/static/css/2.af3c1da9.chunk.css.map",
-    "static/css/main.26a3de62.chunk.css.map": "/SortingVisualizer/static/css/main.26a3de62.chunk.css.map",
-    "static/js/2.305c57df.chunk.js.LICENSE.txt": "/SortingVisualizer/static/js/2.305c57df.chunk.js.LICENSE.txt",
+    "static/css/main.22422a1f.chunk.css.map": "/SortingVisualizer/static/css/main.22422a1f.chunk.css.map",
+    "static/js/2.ffad133e.chunk.js.LICENSE.txt": "/SortingVisualizer/static/js/2.ffad133e.chunk.js.LICENSE.txt",
     "static/media/github-logo.svg": "/SortingVisualizer/static/media/github-logo.b53ff55e.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.7b7ac56c.js",
-    "static/css/2.af3c1da9.chunk.css",
-    "static/js/2.305c57df.chunk.js",
-    "static/css/main.26a3de62.chunk.css",
-    "static/js/main.0740f650.chunk.js"
+    "static/js/2.ffad133e.chunk.js",
+    "static/css/main.22422a1f.chunk.css",
+    "static/js/main.c0329935.chunk.js"
   ]
 }
