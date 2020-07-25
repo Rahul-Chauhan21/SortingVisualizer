@@ -165,12 +165,12 @@ export default class SortingVisualizer extends React.Component {
   }
 
   async quickSort() {
-    await this.disableButtons();
     if (this.state.isSorted) {
       swal("Already Sorted, Create a new Array");
       return;
     }
     swal("Lime Green Denotes Sorted Position and Yellow Bar is the pivot");
+    await this.disableButtons();
     const [animations, sortedArray] = getQuickSortAnimations(this.state.array);
     const arrayBars = document.getElementsByClassName("array-bar");
     for (let i = 0; i < animations.length; i++) {
