@@ -12,7 +12,7 @@ import "./SortingVisualizer.css";
 const PRIMARY_COLOR = "pink";
 // This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = "blue";
-const SUDO_SORTED_COLOR = "red";
+const SUDO_SORTED_COLOR = "#f72828";
 const SORTED_COLOR = "#7CFC00";
 const WIDTH = Math.floor((0.75 * window.innerWidth) / 11);
 export default class SortingVisualizer extends React.Component {
@@ -38,6 +38,7 @@ export default class SortingVisualizer extends React.Component {
     this.resetArray(this.state.value);
   }
   resetArray(width) {
+    console.log(width);
     this.setState({ value: width, animationSpeed: (WIDTH * 10) / width });
     const array = [];
     for (let i = 0; i < width; i++) {
@@ -96,12 +97,9 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
     );
-    setTimeout(() => this.restoreButtons(), RESTORE_TIME);
-    setTimeout(
-      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
-      RESTORE_TIME
-    );
     setTimeout(() => {
+      this.restoreButtons();
+      swal("Array Sorted!", "Hope you liked it", "success");
       this.setState({ isSorted: !this.isSorted });
     }, RESTORE_TIME);
   }
@@ -154,12 +152,9 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
     );
-    setTimeout(() => this.restoreButtons(), RESTORE_TIME);
-    setTimeout(
-      () => swal("Array Sorted!", "Hope you liked it", "success"),
-      RESTORE_TIME
-    );
     setTimeout(() => {
+      this.restoreButtons();
+      swal("Array Sorted!", "Hope you liked it", "success");
       this.setState({ isSorted: !this.isSorted });
     }, RESTORE_TIME);
   }
@@ -169,7 +164,7 @@ export default class SortingVisualizer extends React.Component {
       swal("Already Sorted, Create a new Array");
       return;
     }
-    swal("Lime Green Denotes Sorted Position and Yellow Bar is the pivot");
+    swal("Yellow Bar is the pivot");
     await this.disableButtons();
     const [animations, sortedArray] = getQuickSortAnimations(this.state.array);
     const arrayBars = document.getElementsByClassName("array-bar");
@@ -221,12 +216,9 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
     );
-    setTimeout(() => this.restoreButtons(), RESTORE_TIME);
-    setTimeout(
-      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
-      RESTORE_TIME
-    );
     setTimeout(() => {
+      this.restoreButtons();
+      swal("Array Sorted!", "Hope you liked it (:", "success");
       this.setState({ isSorted: !this.isSorted });
     }, RESTORE_TIME);
   }
@@ -235,9 +227,7 @@ export default class SortingVisualizer extends React.Component {
       swal("Already Sorted, Create a new Array");
       return;
     }
-    swal(
-      "Blinking Red Bar denotes Sudo Sorted Position and Lime Green denotes Sorted Position"
-    );
+    swal("Blinking Red Bar denotes Sudo Sorted Position");
     await this.disableButtons();
     const [animations, sortedArray] = getInsertionSortAnimations(
       this.state.array
@@ -272,23 +262,17 @@ export default class SortingVisualizer extends React.Component {
         const barOneStyle = arrayBars[barOneIdx].style;
         setTimeout(() => {
           barOneStyle.height = `${newHeight}px`;
-          if (barOneStyle.height === `${sortedArray[barOneIdx]}px`) {
-            barOneStyle.backgroundColor = SORTED_COLOR;
-          } else {
-            barOneStyle.backgroundColor = PRIMARY_COLOR;
-          }
+          barOneStyle.backgroundColor = PRIMARY_COLOR;
         }, i * this.state.animationSpeed);
       }
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
     );
-    setTimeout(() => this.restoreButtons(), RESTORE_TIME);
-    setTimeout(
-      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
-      RESTORE_TIME
-    );
     setTimeout(() => {
+      this.restoreButtons();
+      swal("Array Sorted!", "Hope you liked it (:", "success");
+      this.finishedSorting();
       this.setState({ isSorted: !this.isSorted });
     }, RESTORE_TIME);
   }
@@ -319,8 +303,11 @@ export default class SortingVisualizer extends React.Component {
         const barOneStyle = arrayBars[barOneIdx].style;
         setTimeout(() => {
           barOneStyle.height = `${newHeight}px`;
+          barOneStyle.backgroundColor = SECONDARY_COLOR;
           if (barOneStyle.height === `${sortedArray[barOneIdx]}px`) {
-            barOneStyle.backgroundColor = SORTED_COLOR;
+            setTimeout(() => {
+              barOneStyle.backgroundColor = SORTED_COLOR;
+            }, this.state.animationSpeed);
           } else {
             barOneStyle.backgroundColor = PRIMARY_COLOR;
           }
@@ -330,14 +317,19 @@ export default class SortingVisualizer extends React.Component {
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
     );
-    setTimeout(() => this.restoreButtons(), RESTORE_TIME);
-    setTimeout(
-      () => swal("Array Sorted!", "Hope you liked it (:", "success"),
-      RESTORE_TIME
-    );
     setTimeout(() => {
+      this.restoreButtons();
+      swal("Array Sorted!", "Hope you liked it (:", "success");
       this.setState({ isSorted: !this.state.isSorted });
     }, RESTORE_TIME);
+  }
+
+  finishedSorting() {
+    const arrayBars = document.getElementsByClassName("array-bar");
+    for (let i = 0; i < arrayBars.length; i++) {
+      const ithBarStyle = arrayBars[i].style;
+      ithBarStyle.backgroundColor = SORTED_COLOR;
+    }
   }
 
   disableButtons() {
@@ -382,6 +374,8 @@ export default class SortingVisualizer extends React.Component {
   }
   render() {
     const { array } = this.state;
+    const length = this.state.array.length;
+    const numWidth = length < 120 ? 30 : 10;
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -414,7 +408,6 @@ export default class SortingVisualizer extends React.Component {
                   type="range"
                   id="myRange"
                   className="slider"
-                  progress
                   defaultValue={this.state.width}
                   disabled={this.state.isRunning ? true : false}
                   min={10}
@@ -491,6 +484,7 @@ export default class SortingVisualizer extends React.Component {
               style={{
                 backgroundColor: PRIMARY_COLOR,
                 height: `${value}px`,
+                width: `${numWidth}px`,
               }}
             ></div>
           ))}
