@@ -2,14 +2,11 @@ export function getHeapSortAnimations(array) {
   let animations = [];
   buildMaxHeap(array, animations);
   for (let endIdx = array.length - 1; endIdx > 0; endIdx--) {
-    animations.push(["comparison1", 0, endIdx]);
-    animations.push(["comparison2", 0, endIdx]);
-    animations.push(["overwrite", 0, array[endIdx]]);
-    animations.push(["overwrite", endIdx, array[0]]);
+    animations.push(["swapping", 0, endIdx]);
     swap(0, endIdx, array);
     heapifyDown(0, endIdx - 1, array, animations);
   }
-  return [animations, array];
+  return animations;
 }
 
 function buildMaxHeap(array, animations) {
@@ -30,10 +27,8 @@ function heapifyDown(parentIdx, endIdx, heap, animations) {
     if (heap[parentIdx] > heap[largerChildIdx]) {
       return;
     } else {
-      animations.push(["comparison1", parentIdx, largerChildIdx]);
-      animations.push(["comparison2", parentIdx, largerChildIdx]);
-      animations.push(["overwrite", parentIdx, heap[largerChildIdx]]);
-      animations.push(["overwrite", largerChildIdx, heap[parentIdx]]);
+      animations.push(["comparing", parentIdx, largerChildIdx]);
+      animations.push(["swapping", parentIdx, largerChildIdx]);
       swap(parentIdx, largerChildIdx, heap);
       parentIdx = largerChildIdx;
       leftChildIdx = parentIdx * 2 + 1;
