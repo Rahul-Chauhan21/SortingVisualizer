@@ -14,6 +14,7 @@ const PRIMARY_COLOR = "pink";
 // This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = "#5e64ff";
 const SWAP_COLOR = "red";
+const PIVOT_COLOR = "yellow";
 const WIDTH = Math.floor((0.75 * window.innerWidth) / 10);
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -158,6 +159,7 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
+      // Change color depending on the state from animations[i]
       setTimeout(() => {
         this.changeColor(
           [barOneIdx, barTwoIdx],
@@ -171,6 +173,7 @@ export default class SortingVisualizer extends React.Component {
           this.swapBars(barOneIdx, barTwoIdx);
         }, (i + 1 / 3) * this.state.animationSpeed);
       }
+      // Revert back to original color.
       setTimeout(() => {
         this.changeColor(
           [barOneIdx, barTwoIdx],
@@ -192,27 +195,32 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
-      const barOneStyle = arrayBars[barOneIdx].style;
-      const barTwoStyle = arrayBars[barTwoIdx].style;
-      if (state === "comparing") {
-        //Colors and restores bars being compared
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        }, i * this.state.animationSpeed);
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, (i + 1) * this.state.animationSpeed);
-      } else {
-        // Swaps bar's height
+      // Change color depending on the state from animations[i]
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          state === "comparing"
+            ? [SECONDARY_COLOR, SECONDARY_COLOR]
+            : [SWAP_COLOR, SWAP_COLOR]
+        );
+      }, i * this.state.animationSpeed);
+      if (state === "swapping") {
         setTimeout(() => {
           this.swapBars(barOneIdx, barTwoIdx);
-        }, i * this.state.animationSpeed);
+        }, (i + 1) * this.state.animationSpeed);
       }
+      // Revert back to original color.
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          [PRIMARY_COLOR, PRIMARY_COLOR]
+        );
+      }, (i + 2) * this.state.animationSpeed);
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
     );
-    //Turn all bars green and restore buttons.
+    //Turn all bars green.
     setTimeout(() => {
       this.setState({ isSorting: false, sorted: true });
       this.finishedSorting();
@@ -255,20 +263,27 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
-      const barOneStyle = arrayBars[barOneIdx].style;
-      const barTwoStyle = arrayBars[barTwoIdx].style;
-      if (state === "comparing") {
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        }, i * this.state.animationSpeed);
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, (i + 1) * this.state.animationSpeed);
-      } else {
+      // Change color depending on the state from animations[i]
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          state === "comparing"
+            ? [SECONDARY_COLOR, SECONDARY_COLOR]
+            : [SWAP_COLOR, SWAP_COLOR]
+        );
+      }, i * this.state.animationSpeed);
+      if (state === "swapping") {
         setTimeout(() => {
           this.swapBars(barOneIdx, barTwoIdx);
-        }, i * this.state.animationSpeed);
+        }, (i + 1 / 3) * this.state.animationSpeed);
       }
+      // Revert back to original color.
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          [PRIMARY_COLOR, PRIMARY_COLOR]
+        );
+      }, (i + 2 / 3) * this.state.animationSpeed);
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
