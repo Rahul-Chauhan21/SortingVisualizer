@@ -13,6 +13,7 @@ import "./SortingVisualizer.css";
 const PRIMARY_COLOR = "pink";
 // This is the color of array bars that are being compared throughout the animations.
 const SECONDARY_COLOR = "#5e64ff";
+const SWAP_COLOR = "red";
 const WIDTH = Math.floor((0.75 * window.innerWidth) / 10);
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -20,12 +21,13 @@ export default class SortingVisualizer extends React.Component {
 
     this.state = {
       array: [],
+      color: [],
       value: WIDTH,
       width: WIDTH,
       isSorting: false,
       sorted: false,
       algorithm: "",
-      animationSpeed: (WIDTH * 15) / WIDTH,
+      animationSpeed: (WIDTH * 45) / WIDTH,
     };
   }
   // Creates a random array when app is loaded
@@ -38,15 +40,15 @@ export default class SortingVisualizer extends React.Component {
   resetArray = (width) => {
     this.setState({
       value: width,
-      animationSpeed: Math.floor((WIDTH * 15) / width),
+      animationSpeed: Math.floor((WIDTH * 45) / width),
       sorted: false,
     });
     const array = [];
     for (let i = 0; i < width; i++) {
       array.push(randomIntFromInterval(15, 0.85 * window.innerHeight));
     }
-
-    this.setState({ array });
+    const color = array.map((number) => PRIMARY_COLOR);
+    this.setState({ array: array, color: color });
     this.resetColors();
   };
   // updates the state algorithm
@@ -93,8 +95,14 @@ export default class SortingVisualizer extends React.Component {
     let arrayBars = document.getElementsByClassName("array-bar");
     for (let i = 0; i < arrayBars.length; i++) {
       arrayBars[i].className = "array-bar";
-      arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
     }
+  }
+  changeColor(idxArray, color) {
+    let currentColor = this.state.color.slice();
+    idxArray.forEach(function (idx, c = 0) {
+      currentColor[idx] = color[c++];
+    });
+    this.setState({ color: currentColor });
   }
   finishedSorting() {
     let arrayBars = document.getElementsByClassName("array-bar");
@@ -150,22 +158,25 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
-      const barOneStyle = arrayBars[barOneIdx].style;
-      const barTwoStyle = arrayBars[barTwoIdx].style;
-      if (state === "comparing") {
-        // colors and restores bars being compared.
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        }, i * this.state.animationSpeed);
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, (i + 1) * this.state.animationSpeed);
-      } else {
-        // swap bar heights
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          state === "comparing"
+            ? [SECONDARY_COLOR, SECONDARY_COLOR]
+            : [SWAP_COLOR, SWAP_COLOR]
+        );
+      }, i * this.state.animationSpeed);
+      if (state === "swapping") {
         setTimeout(() => {
           this.swapBars(barOneIdx, barTwoIdx);
-        }, i * this.state.animationSpeed);
+        }, (i + 1 / 3) * this.state.animationSpeed);
       }
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          [PRIMARY_COLOR, PRIMARY_COLOR]
+        );
+      }, (i + 2 / 3) * this.state.animationSpeed);
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
@@ -310,7 +321,7 @@ export default class SortingVisualizer extends React.Component {
           testSortingAlgorithm={this.testSortingAlgorithm}
           isSorting={this.state.isSorting}
         />
-        <Array randomArray={this.state.array} />
+        <Array randomArray={this.state.array} color={this.state.color} />
       </React.Fragment>
     );
   }
