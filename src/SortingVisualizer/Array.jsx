@@ -15,6 +15,7 @@ class Array extends React.Component {
                 ? number
                 : ""
             }
+            color={this.props.color[idx]}
           />
         ))}
       </div>
