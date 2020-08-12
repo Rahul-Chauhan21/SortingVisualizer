@@ -28,7 +28,7 @@ export default class SortingVisualizer extends React.Component {
       isSorting: false,
       sorted: false,
       algorithm: "",
-      animationSpeed: (WIDTH * 45) / WIDTH,
+      animationSpeed: (WIDTH * 50) / WIDTH,
     };
   }
   // Creates a random array when app is loaded
@@ -41,7 +41,7 @@ export default class SortingVisualizer extends React.Component {
   resetArray = (width) => {
     this.setState({
       value: width,
-      animationSpeed: Math.floor((WIDTH * 45) / width),
+      animationSpeed: Math.floor((WIDTH * 50) / width),
       sorted: false,
     });
     const array = [];
@@ -112,13 +112,18 @@ export default class SortingVisualizer extends React.Component {
     }
   }
   swapBars(indexOne, indexTwo) {
-    var auxiliaryArray = this.state.array.slice();
+    const auxiliaryArray = this.state.array.slice();
     const temp = auxiliaryArray[indexOne];
     auxiliaryArray[indexOne] = auxiliaryArray[indexTwo];
     auxiliaryArray[indexTwo] = temp;
     this.setState({ array: auxiliaryArray });
   }
 
+  overwriteBar(indexOne, newHeight) {
+    const auxiliaryArray = this.state.array.slice();
+    auxiliaryArray[indexOne] = newHeight;
+    this.setState({ array: auxiliaryArray });
+  }
   testSortingAlgorithm = () => {
     if (this.state.algorithm === "") {
       swal("Select an Algorithm");
@@ -207,7 +212,7 @@ export default class SortingVisualizer extends React.Component {
       if (state === "swapping") {
         setTimeout(() => {
           this.swapBars(barOneIdx, barTwoIdx);
-        }, (i + 1) * this.state.animationSpeed);
+        }, (i + 1 / 3) * this.state.animationSpeed);
       }
       // Revert back to original color.
       setTimeout(() => {
@@ -215,7 +220,7 @@ export default class SortingVisualizer extends React.Component {
           [barOneIdx, barTwoIdx],
           [PRIMARY_COLOR, PRIMARY_COLOR]
         );
-      }, (i + 2) * this.state.animationSpeed);
+      }, (i + 2 / 3) * this.state.animationSpeed);
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
@@ -229,26 +234,42 @@ export default class SortingVisualizer extends React.Component {
   // Animations array: [state, barOne, barTwo, pivotIdx]
   quickSort = (animations, arrayBars) => {
     this.setState({ isSorting: true });
+    let lastPivotIdx = -1;
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx, pivotIdx] = animations[i];
-      const barOneStyle = arrayBars[barOneIdx].style;
-      const barTwoStyle = arrayBars[barTwoIdx].style;
-      const pivotBarStyle = arrayBars[pivotIdx].style;
-
-      if (state === "comparing") {
+      if (/*eslint-disable-next-line*/ pivotIdx !== lastPivotIdx) {
         setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = SECONDARY_COLOR;
-          pivotBarStyle.backgroundColor = "yellow";
-        }, i * this.state.animationSpeed);
-
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = pivotBarStyle.backgroundColor = PRIMARY_COLOR;
-        }, (i + 1) * this.state.animationSpeed);
-      } else {
-        setTimeout(() => {
-          this.swapBars(barOneIdx, barTwoIdx);
+          this.changeColor(
+            [lastPivotIdx, pivotIdx],
+            [PRIMARY_COLOR, PIVOT_COLOR]
+          );
         }, i * this.state.animationSpeed);
       }
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx, pivotIdx],
+          state === "comparing"
+            ? [SECONDARY_COLOR, SECONDARY_COLOR, PIVOT_COLOR]
+            : [SWAP_COLOR, SWAP_COLOR, PIVOT_COLOR]
+        );
+      }, i * this.state.animationSpeed);
+      if (state === "swapping") {
+        setTimeout(() => {
+          if (barOneIdx === pivotIdx) {
+            if (arrayBars[barOneIdx] !== arrayBars[pivotIdx])
+              this.changeColor([pivotIdx], [SWAP_COLOR]);
+          }
+          this.swapBars(barOneIdx, barTwoIdx);
+        }, (i + 1 / 3) * this.state.animationSpeed);
+      }
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          [PRIMARY_COLOR, PRIMARY_COLOR]
+        );
+      }, (i + 2 / 3) * this.state.animationSpeed);
+      // eslint-disable-next-line;
+      lastPivotIdx = pivotIdx;
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
@@ -299,20 +320,27 @@ export default class SortingVisualizer extends React.Component {
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx, newHeight] = animations[i];
-      const barOneStyle = arrayBars[barOneIdx].style;
-      const barTwoStyle = arrayBars[barTwoIdx].style;
-      if (state === "comparing") {
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          state === "comparing"
+            ? [SECONDARY_COLOR, SECONDARY_COLOR]
+            : [PRIMARY_COLOR, PRIMARY_COLOR]
+        );
+      }, i * this.state.animationSpeed);
+      if (state === "overwriting") {
         setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        }, i * this.state.animationSpeed);
-        setTimeout(() => {
-          barOneStyle.backgroundColor = barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, (i + 1) * this.state.animationSpeed);
-      } else {
-        setTimeout(() => {
-          barOneStyle.height = `${newHeight}px`;
-        }, i * this.state.animationSpeed);
+          this.changeColor([barOneIdx], [SWAP_COLOR]);
+          this.overwriteBar(barOneIdx, newHeight);
+        }, (i + 1 / 3) * this.state.animationSpeed);
       }
+      // Revert back to original color.
+      setTimeout(() => {
+        this.changeColor(
+          [barOneIdx, barTwoIdx],
+          [PRIMARY_COLOR, PRIMARY_COLOR]
+        );
+      }, (i + 2 / 3) * this.state.animationSpeed);
     }
     const RESTORE_TIME = parseInt(
       this.state.animationSpeed * animations.length + 500
