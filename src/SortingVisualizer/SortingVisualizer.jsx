@@ -39,6 +39,7 @@ export default class SortingVisualizer extends React.Component {
 
   // generates a new array and enables the slider range
   resetArray = (width) => {
+    this.resetColors();
     this.setState({
       value: width,
       animationSpeed: Math.floor((WIDTH * 50) / width),
@@ -50,7 +51,6 @@ export default class SortingVisualizer extends React.Component {
     }
     const color = array.map((number) => PRIMARY_COLOR);
     this.setState({ array: array, color: color });
-    this.resetColors();
   };
   // updates the state algorithm
   changeAlgorithm = (chosen) => {
@@ -92,12 +92,14 @@ export default class SortingVisualizer extends React.Component {
     }
   };
 
-  resetColors() {
+  resetColors = () => {
     let arrayBars = document.getElementsByClassName("array-bar");
     for (let i = 0; i < arrayBars.length; i++) {
       arrayBars[i].className = "array-bar";
     }
-  }
+    var current_color = this.state.color.slice();
+    this.setState({ color: current_color.map((c) => PRIMARY_COLOR) });
+  };
   changeColor(idxArray, color) {
     let currentColor = this.state.color.slice();
     idxArray.forEach(function (idx, c = 0) {
@@ -124,6 +126,13 @@ export default class SortingVisualizer extends React.Component {
     auxiliaryArray[indexOne] = newHeight;
     this.setState({ array: auxiliaryArray });
   }
+  handleStop = () => {
+    const highestTimeoutId = setTimeout(";");
+    for (let i = 0; i < highestTimeoutId; i++) {
+      clearTimeout(i);
+    }
+    this.setState({ isSorting: false });
+  };
   testSortingAlgorithm = () => {
     if (this.state.algorithm === "") {
       swal("Select an Algorithm");
@@ -162,6 +171,7 @@ export default class SortingVisualizer extends React.Component {
   // Animations array: [state, i , i + 1]
   bubbleSort = (animations, arrayBars) => {
     this.setState({ isSorting: true });
+    this.resetColors();
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
       // Change color depending on the state from animations[i]
@@ -197,6 +207,7 @@ export default class SortingVisualizer extends React.Component {
   };
   // Animations array: [state, barOne, barTwo]
   heapSort = (animations, arrayBars) => {
+    this.resetColors();
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
@@ -233,6 +244,7 @@ export default class SortingVisualizer extends React.Component {
   };
   // Animations array: [state, barOne, barTwo, pivotIdx]
   quickSort = (animations, arrayBars) => {
+    this.resetColors();
     this.setState({ isSorting: true });
     let lastPivotIdx = -1;
     for (let i = 0; i < animations.length; i++) {
@@ -281,6 +293,7 @@ export default class SortingVisualizer extends React.Component {
   };
   //Animations array: [state, j, j -1]
   insertionSort(animations, arrayBars) {
+    this.resetColors();
     this.setState({ isSorting: true });
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx] = animations[i];
@@ -318,6 +331,7 @@ export default class SortingVisualizer extends React.Component {
   //                             "swapping" [state, i index, j index, height]
   mergeSort = (animations, arrayBars) => {
     this.setState({ isSorting: true });
+    this.resetColors();
     for (let i = 0; i < animations.length; i++) {
       const [state, barOneIdx, barTwoIdx, newHeight] = animations[i];
       setTimeout(() => {
@@ -363,6 +377,7 @@ export default class SortingVisualizer extends React.Component {
           algorithm={this.state.algorithm}
           testSortingAlgorithm={this.testSortingAlgorithm}
           isSorting={this.state.isSorting}
+          handleStop={this.handleStop}
         />
         <Array randomArray={this.state.array} color={this.state.color} />
       </React.Fragment>
