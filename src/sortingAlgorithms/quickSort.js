@@ -42,6 +42,9 @@ function quickSortHelper(array, startIdx, endIdx, animations) {
 }
 
 function swap(array, indexOne, indexTwo) {
+  if (array[indexOne] === array[indexTwo]) {
+    return;
+  }
   const temp = array[indexOne];
   array[indexOne] = array[indexTwo];
   array[indexTwo] = temp;

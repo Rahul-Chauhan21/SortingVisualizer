@@ -2,38 +2,40 @@ export function mergeSort(array) {
   if (array.length <= 1) {
     return array;
   }
-  const auxiliaryArray = array.slice();
-  mergeSortHelper(array, 0, array.length - 1, auxiliaryArray);
+  mergeSortHelper(array, 0, array.length - 1);
   return array;
 }
 
-function mergeSortHelper(mainArray, startIdx, endIdx, auxiliaryArray) {
+function mergeSortHelper(mainArray, startIdx, endIdx) {
   if (startIdx < endIdx) {
     const middleIdx = Math.floor((startIdx + endIdx) / 2);
-    mergeSortHelper(auxiliaryArray, startIdx, middleIdx, mainArray);
-    mergeSortHelper(auxiliaryArray, middleIdx + 1, endIdx, mainArray);
-    doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray);
+    mergeSortHelper(mainArray, startIdx, middleIdx);
+    mergeSortHelper(mainArray, middleIdx + 1, endIdx);
+    doMerge(mainArray, startIdx, middleIdx, endIdx);
   }
 }
 
-function doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray) {
-  let k = startIdx;
+function doMerge(mainArray, startIdx, middleIdx, endIdx) {
   let i = startIdx;
   let j = middleIdx + 1;
+  let k = 0;
+  let temp = new Array(endIdx - startIdx + 1);
   while (i <= middleIdx && j <= endIdx) {
-    if (auxiliaryArray[i] <= auxiliaryArray[j]) {
-      mainArray[k++] = auxiliaryArray[i++];
+    if (mainArray[j] < mainArray[i]) {
+      temp[k++] = mainArray[j++];
     } else {
-      mainArray[k++] = auxiliaryArray[j++];
+      temp[k++] = mainArray[i++];
     }
   }
-
   while (i <= middleIdx) {
-    mainArray[k++] = auxiliaryArray[i++];
+    temp[k++] = mainArray[i++];
+  }
+  while (j <= endIdx) {
+    temp[k++] = mainArray[j++];
   }
 
-  while (j <= endIdx) {
-    mainArray[k++] = auxiliaryArray[j++];
+  for (let i = startIdx; i <= endIdx; i++) {
+    mainArray[i] = temp[i - startIdx];
   }
 }
 
