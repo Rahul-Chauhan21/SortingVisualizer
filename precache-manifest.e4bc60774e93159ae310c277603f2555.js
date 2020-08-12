@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bc8e9eee8811a51504dc2cc5e31b4353",
+    "revision": "1acb4217026fc5f79b68c5b232f8398e",
     "url": "/SortingVisualizer/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SortingVisualizer/static/css/2.af3c1da9.chunk.css"
   },
   {
-    "revision": "aa215b15cebb5e5d6a4f",
+    "revision": "b40088d005874f0e2dbd",
     "url": "/SortingVisualizer/static/css/main.6212a6c8.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SortingVisualizer/static/js/2.1617dedc.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "aa215b15cebb5e5d6a4f",
-    "url": "/SortingVisualizer/static/js/main.33d4ae33.chunk.js"
+    "revision": "b40088d005874f0e2dbd",
+    "url": "/SortingVisualizer/static/js/main.e4ac87b4.chunk.js"
   },
   {
     "revision": "a5cfd56e38f5b23ea175",
