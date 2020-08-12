@@ -1,7 +1,10 @@
 import React from "react";
 import Bar from "./Bar";
 import "./SortingVisualizer.css";
-const MAX_SIZE_DISPLAY_NUM = 30;
+let MAX_SIZE_DISPLAY_NUM = 30;
+if (window.innerWidth <= 420) {
+  MAX_SIZE_DISPLAY_NUM = 15;
+}
 class Array extends React.Component {
   render() {
     return (
