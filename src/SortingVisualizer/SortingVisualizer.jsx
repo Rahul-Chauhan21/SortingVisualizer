@@ -268,7 +268,7 @@ export default class SortingVisualizer extends React.Component {
       if (state === "swapping") {
         setTimeout(() => {
           if (barOneIdx === pivotIdx) {
-            if (arrayBars[barOneIdx] !== arrayBars[pivotIdx])
+            if (arrayBars[barTwoIdx] !== arrayBars[pivotIdx])
               this.changeColor([pivotIdx], [SWAP_COLOR]);
           }
           this.swapBars(barOneIdx, barTwoIdx);
