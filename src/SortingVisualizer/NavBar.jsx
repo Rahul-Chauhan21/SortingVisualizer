@@ -17,6 +17,7 @@ class NavBar extends React.Component {
       algorithm,
       testSortingAlgorithm,
       isSorting,
+      handleStop,
     } = this.props;
     return (
       <Navbar
@@ -55,6 +56,15 @@ class NavBar extends React.Component {
             >
               Start
             </button>
+            {isSorting ? (
+              <button
+                id="stopButton"
+                className="btn btn-danger"
+                onClick={() => handleStop()}
+              >
+                Stop
+              </button>
+            ) : null}
           </Nav>
           <Nav className="mx-auto">
             <div className="slidercontainer">
