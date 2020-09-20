@@ -2,12 +2,14 @@ import React from "react";
 import swal from "sweetalert";
 import Array from "./Array";
 import NavBar from "./NavBar";
-import * as sortingAlgorithms from "../sortingAlgorithms/testScript.js";
-import { getBubbleSortAnimations } from "../sortingAlgorithms/bubbleSort";
-import { getMergeSortAnimations } from "../sortingAlgorithms/mergeSort";
-import { getQuickSortAnimations } from "../sortingAlgorithms/quickSort";
-import { getHeapSortAnimations } from "../sortingAlgorithms/heapSort";
-import { getInsertionSortAnimations } from "../sortingAlgorithms/insertionSort";
+import * as sortingAlgorithms from "../../utils/sortingAlgorithms/testScript.js";
+import { getBubbleSortAnimations } from "../../utils/sortingAlgorithms/bubbleSort";
+import { getMergeSortAnimations } from "../../utils/sortingAlgorithms/mergeSort";
+import { getQuickSortAnimations } from "../../utils/sortingAlgorithms/quickSort";
+import { getHeapSortAnimations } from "../../utils/sortingAlgorithms/heapSort";
+import { getInsertionSortAnimations } from "../../utils/sortingAlgorithms/insertionSort";
+import { randomIntFromInterval } from "../../utils/helperFunctions/randomIntFromInterval";
+import { arraysAreEqual } from "../../utils/helperFunctions/arraysAreEqual";
 import "./SortingVisualizer.css";
 // This is the main color of the array bars.
 const PRIMARY_COLOR = "pink";
@@ -383,18 +385,4 @@ export default class SortingVisualizer extends React.Component {
       </React.Fragment>
     );
   }
-}
-
-function randomIntFromInterval(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function arraysAreEqual(arrayOne, arrayTwo) {
-  if (arrayOne.length !== arrayTwo.length) return false;
-  for (let i = 0; i < arrayOne.length; i++) {
-    if (arrayOne[i] !== arrayTwo[i]) {
-      return false;
-    }
-  }
-  return true;
 }
