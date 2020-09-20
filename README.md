@@ -28,7 +28,6 @@ width="600" height="300">
 
 - [About the Project](#about-the-project)
 - [Built With](#built-with)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -51,12 +50,6 @@ Following technologies are used in the project.
 - Bootstrap 4
 - React Js
 - Reactstrap
-
-<!-- ROADMAP -->
-
-## Roadmap
-
-Will combine this tool with a Searching Visualizer Tool soon using state management library in React using Context API and Hooks.
 
 <!-- CONTRIBUTING -->
 
