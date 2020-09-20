@@ -1,6 +1,6 @@
-[![GitHub license](https://img.shields.io/github/license/AKASHCS50/Sorting-Visualizer-App)](https://github.com/Rahul-Chauhan21/SortingVisualizer/blob/master/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/AKASHCS50/Sorting-Visualizer-App)](https://github.com/Rahul-Chauhan21/SortingVisualizer/issues)
-[![GitHub stars](https://img.shields.io/github/stars/AKASHCS50/Sorting-Visualizer-App)](https://github.com/Rahul-Chauhan21/SortingVisualizer/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Rahul-Chauhan21/SortingVisualizer)](https://github.com/Rahul-Chauhan21/SortingVisualizer/blob/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/Rahul-Chauhan21/SortingVisualizer)](https://github.com/Rahul-Chauhan21/SortingVisualizer/issues)
+[![GitHub stars](https://img.shields.io/github/stars/Rahul-Chauhan21/SortingVisualizer)](https://github.com/Rahul-Chauhan21/SortingVisualizer/stargazers)
 [![Linkedin](https://img.shields.io/badge/opensource-linkedin-blue.svg?style=flat-square)](https://www.linkedin.com/in/rahul-chauhan-80a32b194/)
 
 <!-- PROJECT LOGO -->
